@@ -13,6 +13,7 @@ class Movie extends Model
     protected $fillable = [
         'name',
         'url',
+        'type',
         'movie_id'
     ];
 }
