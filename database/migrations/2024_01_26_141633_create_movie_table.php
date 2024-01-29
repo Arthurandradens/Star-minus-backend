@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
-            $table->integer('move_id')->comment('id do filme da api tmdb');
+            $table->integer('movie_id')->comment('id do filme da api tmdb');
             $table->timestamps();
         });
     }

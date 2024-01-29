@@ -1,0 +1,14 @@
+version: "3"
+services:
+  homologadb:
+    image: postgres:9.5.25
+    container_name: post_dev
+    environment:
+      - POSTGRES_DB=policia
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=@policia-postgres@
+      - TZ=GMT
+    volumes:
+      - /home/philipe/bancopost/bancopost:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
