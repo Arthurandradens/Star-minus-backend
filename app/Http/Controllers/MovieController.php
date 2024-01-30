@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MovieRequest;
 use App\Models\Movie;
+use App\Repository\MovieRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
+//    private MovieRepository $movieRepository;
+//    public function __construct($movieRepository)
+//    {
+//          $this->movieRepository = $movieRepository;
+//    }
+
     public function index()
     {
-       $movies = Movie::all();
-
+        $movies =  MovieRepository::all();
+//          $movies = $this->movieRepository::all();
         return response()->json(["results" => $movies]);
     }
 
