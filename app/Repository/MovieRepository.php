@@ -7,4 +7,9 @@ use App\Models\Movie;
 class MovieRepository extends AbstractRepository
 {
     protected static $model = Movie::class;
+
+    public static function findByMovieId(int $movie_id)
+    {
+        return self::loadModel()::query()->where(['movie_id' => $movie_id])->first();
+    }
 }

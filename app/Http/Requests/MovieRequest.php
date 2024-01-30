@@ -37,10 +37,6 @@ class MovieRequest extends FormRequest
                 'url' => request()->url,
                 'type' => request()->type,
                 'movie_id' => request()->movie_id
-//               'name' => $request->input('name'),
-//               'url' => $request->input('url'),
-//               'type' => $request->input('type'),
-//               'movie_id' => $request->input('movie_id'),
             ]
         ];
     }

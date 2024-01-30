@@ -13,7 +13,7 @@ class MovieController extends Controller
 //    private MovieRepository $movieRepository;
 //    public function __construct($movieRepository)
 //    {
-//          $this->movieRepository = $movieRepository;
+//          $this->movieRepository = new $movieRepository;
 //    }
 
     public function index()
@@ -21,6 +21,16 @@ class MovieController extends Controller
         $movies =  MovieRepository::all();
 //          $movies = $this->movieRepository::all();
         return response()->json(["results" => $movies]);
+    }
+
+    public function show(int $movie_id)
+    {
+        $movie = MovieRepository::findByMovieId($movie_id);
+
+        if ($movie){
+            return response()->json(['status' => 'mdi-check']);
+        }
+        return response()->json(['status' => 'mdi-plus']);
     }
 
     public function store(MovieRequest $request)
