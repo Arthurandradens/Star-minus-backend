@@ -59,11 +59,30 @@ class MovieController extends Controller
 //       return response()->json(['message' => 'movie criado com sucesso'],201);
     }
 
-    public function destroy(int $id)
-    {
-        $movie = Movie::find($id);
-        $movie->delete();
+//    public function destroy(array $id)
+//    {
+//        $movie = Movie::find($id);
+//        $movie = MovieRepository::deleteAll($id);
+//        $movie->delete();
+//
+//        return response()->json([$movie]);
+//    }
 
-        return response()->json(['message' => 'deletado com sucesso']);
+    public function destroy(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return response()->json(['message' => 'Nenhum ID fornecido.'], 422);
+        }
+
+        try {
+            // Realize a exclusão dos filmes aqui, por exemplo:
+            Movie::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Filmes excluídos com sucesso.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao excluir filmes.', 'error' => $e->getMessage()], 500);
+        }
     }
 }

@@ -12,4 +12,12 @@ class MovieRepository extends AbstractRepository
     {
         return self::loadModel()::query()->where(['movie_id' => $movie_id])->first();
     }
+
+    public static function deleteAll(array $ids): array
+    {
+        foreach($ids as $id){
+            self::loadModel()::query()->where(['id' => $id])->delete();
+        }
+        return ["message" => "deletado com sucesso"];
+    }
 }
