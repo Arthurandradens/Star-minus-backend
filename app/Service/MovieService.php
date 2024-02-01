@@ -29,4 +29,15 @@ class MovieService
     {
         return $this->movieRepository::create($movie);
     }
+
+    public function delete($id)
+    {
+        if (!empty($id)) {
+            if (is_array($id)){
+                return $this->movieRepository::deleteAllElements($id);
+            }
+            return $this->movieRepository::delete($id);
+        }
+        return response()->json(['message' => 'please select a movie.','color' => 'error'], 422);
+    }
 }

@@ -48,44 +48,15 @@ class MovieController extends Controller
             DB::rollBack();
             return response($exception->getMessage(),422);
         }
-//       $movie = new Movie(
-//           'name' => $request->input('name'),
-//           'url' => $request->input('url'),
-//           'type' => $request->input('type'),
-//           'movie_id' => $request->input('movie_id'),
-//       $parametrosPermitidos['movie']
-//       );
-//
-//       $movie->save();
-//
-//       return response()->json(['message' => 'movie criado com sucesso'],201);
     }
-
-//    public function destroy(array $id)
-//    {
-//        $movie = Movie::find($id);
-//        $movie = MovieRepository::deleteAll($id);
-//        $movie->delete();
-//
-//        return response()->json([$movie]);
-//    }
 
     public function destroy(Request $request)
     {
-        $request->validate([
-            "ids" => "required|array"
-        ]);
 
         $ids = $request->input('ids');
 
-        if (empty($ids)) {
-            return response()->json(['message' => 'Movie ID not found.'], 422);
-        }
-
         try {
-            // Realize a exclusão dos filmes aqui
-//            Movie::whereIn('id', $ids)->delete();
-                MovieRepository::deleteAllElements($ids);
+            $this->movieService->delete($ids);
             return response()->json(['message' => 'Deleted from your list.']);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erro ao excluir filmes.', 'error' => $e->getMessage()], 500);
