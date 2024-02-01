@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
-//    private MovieRepository $movieRepository;
+//    private MovieRepository $movieRepository = new MovieRepository();
 //    public function __construct($movieRepository)
 //    {
 //          $this->movieRepository = new $movieRepository;
@@ -41,7 +41,7 @@ class MovieController extends Controller
             $movie = new Movie($parametrosPermitidos['movie']);
             $movie->save();
             DB::commit();
-            return response()->json(["message" => 'criado com sucesso']);
+            return response()->json(["message" => 'added on your list'],201);
         } catch (\Exception $exception){
             DB::rollBack();
             return response($exception->getMessage(),422);
@@ -70,17 +70,21 @@ class MovieController extends Controller
 
     public function destroy(Request $request)
     {
-        $ids = $request->input('ids', []);
+        $request->validate([
+            "ids" => "required|array"
+        ]);
+
+        $ids = $request->input('ids');
 
         if (empty($ids)) {
-            return response()->json(['message' => 'Nenhum ID fornecido.'], 422);
+            return response()->json(['message' => 'Movie ID not found.'], 422);
         }
 
         try {
             // Realize a exclusão dos filmes aqui, por exemplo:
             Movie::whereIn('id', $ids)->delete();
 
-            return response()->json(['message' => 'Filmes excluídos com sucesso.']);
+            return response()->json(['message' => 'Deleted from your list.']);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erro ao excluir filmes.', 'error' => $e->getMessage()], 500);
         }
