@@ -3,12 +3,13 @@
 namespace App\Repository;
 
 use App\Models\Movie;
+use Illuminate\Database\Eloquent\Model;
 
 class MovieRepository extends AbstractRepository
 {
     protected static $model = Movie::class;
 
-    public static function findByMovieId(int $movie_id)
+    public static function findByMovieId(int $movie_id): Model | null
     {
         return self::loadModel()::query()->where(['movie_id' => $movie_id])->first();
     }

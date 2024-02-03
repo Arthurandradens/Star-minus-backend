@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Interfaces\RepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use function Laravel\Prompts\search;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
@@ -33,7 +32,7 @@ abstract class AbstractRepository implements RepositoryInterface
 
     public static function delete(int $id): int
     {
-        return self::loadModel()::query()->where(['id' => $id])->delete();
+        return self::loadModel()::query()->where(['movie_id' => $id])->delete();
     }
 
     public static function update(int $id, array $attributes): int

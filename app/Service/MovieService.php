@@ -3,6 +3,9 @@
 namespace App\Service;
 
 use App\Repository\MovieRepository;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 
 class MovieService
 {
@@ -15,22 +18,22 @@ class MovieService
         $this->movieRepository = $movieRepository;
     }
 
-    public function getMovies()
+    public function getMovies(): Collection
     {
        return $this->movieRepository::all();
     }
 
-    public function getOneMovie($movie_id)
+    public function getOneMovie($movie_id): Model | null
     {
         return $this->movieRepository::findByMovieId($movie_id);
     }
 
-    public function createMovie($movie)
+    public function createMovie($movie): Model | null
     {
         return $this->movieRepository::create($movie);
     }
 
-    public function delete($id)
+    public function delete($id): array | int | JsonResponse
     {
         if (!empty($id)) {
             if (is_array($id)){
