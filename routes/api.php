@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,7 @@ Route::get('/watchlist',[MovieController::class,'index'])->name('watchlist');
 Route::post('/add',[MovieController::class,'store'])->name('add');
 Route::get('/movie-status/{movie_id}',[MovieController::class, 'show']);
 Route::delete('/destroy',[MovieController::class,'destroy']);
+
+
+Route::post('/auth/register',[UserController::class,'register']);
+Route::post('/auth/login',[UserController::class,'login']);
