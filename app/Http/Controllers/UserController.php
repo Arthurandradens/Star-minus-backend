@@ -6,7 +6,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use HttpResponses;
 class UserController extends Controller
 {
     public function login()
@@ -16,6 +16,7 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
+
         try {
             $request->validate([
                 "name" => "required|string|max:256",
@@ -30,7 +31,12 @@ class UserController extends Controller
 
             $user->save();
 
-            return response(["name" => $user->name, "email" => $user->email, "token" => $user->createToken("API TOKEN")], 201);
+//            return response(["name" => $user->name, "email" => $user->email, "token" => $user->createToken("API TOKEN")], 201);
+            return $this->success([
+                "message" => "fununciou",
+                "data" => $user->createToken('API'),
+                "code" => 201
+            ]);
         }catch (Exception $exception){
             return response($exception->getMessage(),422);
         }
