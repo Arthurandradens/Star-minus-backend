@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movie', function (Blueprint $table) {
+        Schema::create('watchlist', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('url');
             $table->string('type')->comment('movie or series');
             $table->integer('movie_id')->comment('id do filme da api tmdb');
+//            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repository\MovieRepository;
-use App\Service\MovieService;
+use App\Repository\WatchListRepository;
+use App\Service\WatchListService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,13 +14,13 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Repository
-        $this->app->singleton(MovieRepository::class, function ($app) {
-            return new MovieRepository();
+        $this->app->singleton(WatchListRepository::class, function ($app) {
+            return new WatchListRepository();
         });
 
         // Services
-        $this->app->singleton(MovieService::class, function ($app) {
-            return new MovieService($app->make(MovieRepository::class));
+        $this->app->singleton(WatchListService::class, function ($app) {
+            return new WatchListService($app->make(WatchListRepository::class));
         });
     }
 

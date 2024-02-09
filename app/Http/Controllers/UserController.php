@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserLoginRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use HttpResponses;
+use App\Traits\HttpResponses;
 class UserController extends Controller
 {
-    public function login()
+    use HttpResponses;
+    public function login(UserLoginRequest $request)
     {
+        $request->validated($request->all());
 
+        if (!Auth::attempt($request->only("email","password"))){
+            return $this->error('credentials do not match', "", 401);
+        }
+
+        $user = User::where("email",$request->email)->first();
+        return $this->success([
+            "user" => $user,
+            "token" => $user->createToken("API Token of ". $user->name)->plainTextToken
+        ]);
     }
 
     public function register(Request $request)
@@ -33,9 +45,8 @@ class UserController extends Controller
 
 //            return response(["name" => $user->name, "email" => $user->email, "token" => $user->createToken("API TOKEN")], 201);
             return $this->success([
-                "message" => "fununciou",
-                "data" => $user->createToken('API'),
-                "code" => 201
+                "user" => $user,
+                "token" => $user->createToken("API Token of ". $user->name)->plainTextToken
             ]);
         }catch (Exception $exception){
             return response($exception->getMessage(),422);

@@ -2,44 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MovieRequest;
-use App\Service\MovieService;
+use App\Http\Requests\WatchListRequest;
+use App\Service\WatchListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class MovieController extends Controller
+class WatchListController extends Controller
 {
-    private MovieService $movieService;
-    public function __construct( MovieService $movieService)
+    private WatchListService $watchListService;
+    public function __construct(WatchListService $movieService)
     {
-          $this->movieService = $movieService;
+          $this->watchListService = $movieService;
     }
 
     public function index()
     {
-//        $movies =  MovieRepository::all();
+//        $movies =  WatchListRepository::all();
 //          $movies = $this->movieRepository::all();
-        $movies = $this->movieService->getMovies();
+        $movies = $this->watchListService->getItems();
         return response()->json(["results" => $movies]);
     }
 
     public function show(int $movie_id)
     {
-//        $movie = MovieRepository::findByMovieId($movie_id);
-            $movie = $this->movieService->getOneMovie($movie_id);
+//        $movie = WatchListRepository::findByMovieId($movie_id);
+            $movie = $this->watchListService->getOneItem($movie_id);
         if ($movie){
             return response()->json(['status' => 'mdi-check']);
         }
         return response()->json(['status' => 'mdi-plus']);
     }
 
-    public function store(MovieRequest $request)
+    public function store(WatchListRequest $request)
     {
       $parametrosPermitidos = $request->validate();
         try {
             DB::beginTransaction();
-            $this->movieService->createMovie($parametrosPermitidos['movie']);
+            $this->watchListService->createItemList($parametrosPermitidos['movie']);
 
             DB::commit();
             return response()->json(["message" => 'added to your list', 'type' => 'success'],201);
@@ -59,7 +59,7 @@ class MovieController extends Controller
         }
 
         try {
-            $this->movieService->delete($ids);
+            $this->watchListService->delete($ids);
             return response()->json(['message' => 'Removed from your list.', 'type' => 'warning']);
         }catch (ModelNotFoundException $e){
             return response()->json(['message' => 'movie not found'],404);
