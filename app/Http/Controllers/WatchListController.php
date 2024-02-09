@@ -3,25 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WatchListRequest;
+use App\Http\Resources\WatchListResource;
+use App\Models\WatchList;
 use App\Service\WatchListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class WatchListController extends Controller
 {
     private WatchListService $watchListService;
-    public function __construct(WatchListService $movieService)
+    public function __construct(WatchListService $watchlistService)
     {
-          $this->watchListService = $movieService;
+          $this->watchListService = $watchlistService;
     }
 
     public function index()
     {
 //        $movies =  WatchListRepository::all();
 //          $movies = $this->movieRepository::all();
-        $movies = $this->watchListService->getItems();
-        return response()->json(["results" => $movies]);
+//        $movies = $this->watchListService->getItems();
+//        return response()->json(["results" => $movies]);
+
+        return WatchListResource::collection(
+            WatchList::where('user_id', Auth::user()->id)->get());
     }
 
     public function show(int $movie_id)

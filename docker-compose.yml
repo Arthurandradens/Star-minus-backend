@@ -4,7 +4,7 @@ services:
     app:
         build:
             args:
-                user: arthur
+                user: diego
                 uid: 1001
             context: ./
             dockerfile: docker/docker-compose/php/php.dockerfile
@@ -19,8 +19,8 @@ services:
             - ./docker/docker-compose/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
             - ./docker/docker-compose/php/php.ini:/usr/local/etc/php/conf.d/php.ini
             - ./docker/docker-compose/php/.bashrc:/home/dime/.bashrc
-            - /home/arthur/projetos-arthur/Star-minus-backend/database:/home/arthur/projetos-arthur/Star-minus-backend/database
-            #-             - /home/diego/www/Star-minus-backend/database:/home/diego/www/Star-minus-backend/database
+            -  /home/diego/www/Star-minus-backend/database:/home/diego/www/Star-minus-backend/database
+#            - /home/arthur/projetos-arthur/Star-minus-backend/database:/home/arthur/projetos-arthur/Star-minus-backend/database
         networks:
             - dev
 

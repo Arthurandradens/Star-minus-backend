@@ -15,7 +15,8 @@ class WatchList extends Model
         'name',
         'url',
         'type',
-        'movie_id'
+        'movie_id',
+        'user_id'
     ];
 
     public function user():BelongsTo

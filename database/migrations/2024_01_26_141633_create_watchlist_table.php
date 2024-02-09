@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('url');
             $table->string('type')->comment('movie or series');
             $table->integer('movie_id')->comment('id do filme da api tmdb');
-//            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movie');
+        Schema::dropIfExists('watchlist');
     }
 };
