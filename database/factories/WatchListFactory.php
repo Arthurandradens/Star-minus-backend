@@ -23,7 +23,7 @@ class WatchListFactory extends Factory
             'url' => $this->faker->url,
             'type' => $this->faker->randomElement(['movie','series']),
             'movie_id' => $this->faker->numberBetween(1, 100),
-            'user_id' => User::all()->random()->id,
+            'user_id' => 11,
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Interfaces\RepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
@@ -18,6 +19,11 @@ abstract class AbstractRepository implements RepositoryInterface
     public static function all(): Collection
     {
         return  self::loadModel()::all();
+    }
+
+    public static function allUserItems(): Collection
+    {
+        return  self::loadModel()::where('user_id', Auth::user()->id)->get();
     }
 
     public static function find(int $id): Model|null

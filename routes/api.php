@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/register',[UserController::class,'register']);
 Route::post('/auth/login',[UserController::class,'login']);
 
-Route::post('/add',[WatchListController::class,'store'])->name('add');
+
 Route::get('/movie-status/{movie_id}',[WatchListController::class, 'show']);
 Route::delete('/destroy',[WatchListController::class,'destroy']);
 
@@ -34,7 +34,9 @@ Route::group(["middleware" => ["auth:sanctum"]], function (){
     Route::post('/logout',[UserController::class,'logout']);
     //list
     Route::get('/watchlist',[WatchListController::class,'index']);
+    Route::post('/add',[WatchListController::class,'store'])->name('add');
 });
+
 
 
 

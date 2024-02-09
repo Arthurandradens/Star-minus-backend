@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class WatchListRequest extends FormRequest
 {
@@ -37,6 +38,7 @@ class WatchListRequest extends FormRequest
                 'url' => request()->url,
                 'type' => request()->type,
                 'movie_id' => request()->movie_id,
+                'user_id' => Auth::user()->id
             ]
         ];
     }

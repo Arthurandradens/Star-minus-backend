@@ -15,7 +15,23 @@ class WatchListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => (string)$this->id,
+
+                'id' => (string)$this->id,
+                'attributes' => [
+                    'name' => $this->name,
+                    'url' => $this->url,
+                    'type' => $this->type,
+                    'movie_id' => $this->movie_id,
+                    'created_at' => $this->created_at,
+                    'updated_at' => $this->updated_at
+                ],
+                'relationships' => [
+                    'id' => (string)$this->user->id,
+                    'user name' => $this->user->name,
+                    'email' => $this->user->email,
+
+                ]
+
         ];
     }
 }

@@ -23,11 +23,9 @@ class WatchListController extends Controller
     {
 //        $movies =  WatchListRepository::all();
 //          $movies = $this->movieRepository::all();
-//        $movies = $this->watchListService->getItems();
+        $movies = $this->watchListService->getItems();
 //        return response()->json(["results" => $movies]);
-
-        return WatchListResource::collection(
-            WatchList::where('user_id', Auth::user()->id)->get());
+        return response()->json(["results" => WatchListResource::collection($movies)]);
     }
 
     public function show(int $movie_id)
@@ -42,11 +40,18 @@ class WatchListController extends Controller
 
     public function store(WatchListRequest $request)
     {
-      $parametrosPermitidos = $request->validate();
+        $parametrosPermitidos = $request->validate();
+
         try {
             DB::beginTransaction();
-            $this->watchListService->createItemList($parametrosPermitidos['movie']);
-
+//            $this->watchListService->createItemList($parametrosPermitidos['movie']);
+//            WatchList::create([
+//                'name' => $request->name,
+//                'url' => $request->url,
+//                'type' => $request->type,
+//                'movie_id' => $request->movie_id,
+//                'user_id' => Auth::user()->id,
+//            ]);
             DB::commit();
             return response()->json(["message" => 'added to your list', 'type' => 'success'],201);
         } catch (\Exception $exception){
