@@ -25,7 +25,7 @@ Route::post('/auth/register',[UserController::class,'register']);
 Route::post('/auth/login',[UserController::class,'login']);
 
 
-Route::get('/movie-status/{movie_id}',[WatchListController::class, 'show']);
+Route::get('/movie-status/{watchlist}',[WatchListController::class, 'show']);
 Route::delete('/destroy',[WatchListController::class,'destroy']);
 
 // Protected Routes

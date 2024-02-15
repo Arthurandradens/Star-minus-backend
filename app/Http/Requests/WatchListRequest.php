@@ -26,7 +26,8 @@ class WatchListRequest extends FormRequest
             'name' => 'required|string|max:255',
             'url' => 'required|url',
             'type' => 'required|string|max:6',
-            'movie_id' => 'required|integer'
+            'movie_id' => 'required|integer',
+            'user_id' => 'required|integer'
         ];
     }
 

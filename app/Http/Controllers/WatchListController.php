@@ -6,6 +6,7 @@ use App\Http\Requests\WatchListRequest;
 use App\Http\Resources\WatchListResource;
 use App\Models\WatchList;
 use App\Service\WatchListService;
+use App\Traits\HttpResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class WatchListController extends Controller
 {
+    use HttpResponses;
     private WatchListService $watchListService;
     public function __construct(WatchListService $watchlistService)
     {
@@ -28,23 +30,37 @@ class WatchListController extends Controller
         return response()->json(["results" => WatchListResource::collection($movies)]);
     }
 
-    public function show(int $movie_id)
+//    public function show(int $movie_id)
+//    {
+////        $movie = WatchListRepository::findByMovieId($movie_id);
+//            $movie = $this->watchListService->getOneItem($movie_id);
+//        if ($movie){
+//            return response()->json(['status' => 'mdi-check']);
+//        }
+//        return response()->json(['status' => 'mdi-plus']);
+//    }
+
+    public function show(WatchList $watchList)
     {
 //        $movie = WatchListRepository::findByMovieId($movie_id);
-            $movie = $this->watchListService->getOneItem($movie_id);
-        if ($movie){
-            return response()->json(['status' => 'mdi-check']);
+        $movie = $this->watchListService->getOneItem($watchList->movie_id);
+        if (Auth::user()->id === $watchList->id){
+            if ($movie){
+                return response()->json(['status' => 'mdi-check']);
+            }
+            return response()->json(['status' => 'mdi-plus']);
         }
-        return response()->json(['status' => 'mdi-plus']);
+        return $this->error('', 'You are no authorized to make this request',403);
     }
 
     public function store(WatchListRequest $request)
     {
         $parametrosPermitidos = $request->validate();
 
+
         try {
             DB::beginTransaction();
-//            $this->watchListService->createItemList($parametrosPermitidos['movie']);
+            $this->watchListService->createItemList($parametrosPermitidos['movie']);
 //            WatchList::create([
 //                'name' => $request->name,
 //                'url' => $request->url,
