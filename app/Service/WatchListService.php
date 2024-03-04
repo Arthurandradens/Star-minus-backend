@@ -20,7 +20,8 @@ class WatchListService
 
     public function getItems(): Collection
     {
-       return $this->watchListRepository::allUserItems();
+//       return $this->watchListRepository::allUserItems();
+        return  $this->watchListRepository::all();
     }
 
     public function getOneItem($movie_id): Model | null

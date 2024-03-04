@@ -40,17 +40,17 @@ class WatchListController extends Controller
 //        return response()->json(['status' => 'mdi-plus']);
 //    }
 
-    public function show(WatchList $watchList)
+    public function show(int $movie_id)
     {
 //        $movie = WatchListRepository::findByMovieId($movie_id);
-        $movie = $this->watchListService->getOneItem($watchList->movie_id);
-        if (Auth::user()->id === $watchList->id){
+           $movie = $this->watchListService->getOneItem($movie_id);
+//        if (Auth::user()->id === $watchList->id){
             if ($movie){
                 return response()->json(['status' => 'mdi-check']);
             }
             return response()->json(['status' => 'mdi-plus']);
-        }
-        return $this->error('', 'You are no authorized to make this request',403);
+//        }
+//        return $this->error('', 'You are no authorized to make this request',403);
     }
 
     public function store(WatchListRequest $request)

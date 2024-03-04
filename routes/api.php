@@ -33,9 +33,11 @@ Route::group(["middleware" => ["auth:sanctum"]], function (){
     // user
     Route::post('/logout',[UserController::class,'logout']);
     //list
-    Route::get('/watchlist',[WatchListController::class,'index']);
-    Route::post('/add',[WatchListController::class,'store'])->name('add');
+
 });
+
+Route::get('/watchlist',[WatchListController::class,'index']);
+Route::post('/add',[WatchListController::class,'store'])->name('add');
 
 
 

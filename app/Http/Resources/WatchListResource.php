@@ -25,12 +25,12 @@ class WatchListResource extends JsonResource
                     'created_at' => $this->created_at,
                     'updated_at' => $this->updated_at
                 ],
-                'relationships' => [
-                    'id' => (string)$this->user->id,
-                    'user name' => $this->user->name,
-                    'email' => $this->user->email,
-
-                ]
+//                'relationships' => [
+//                    'id' => (string)$this->user->id,
+//                    'user name' => $this->user->name,
+//                    'email' => $this->user->email,
+//
+//                ]
 
         ];
     }

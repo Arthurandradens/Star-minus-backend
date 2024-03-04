@@ -27,7 +27,7 @@ class WatchListRequest extends FormRequest
             'url' => 'required|url',
             'type' => 'required|string|max:6',
             'movie_id' => 'required|integer',
-            'user_id' => 'required|integer'
+//            'user_id' => 'required|integer'
         ];
     }
 
@@ -39,7 +39,7 @@ class WatchListRequest extends FormRequest
                 'url' => request()->url,
                 'type' => request()->type,
                 'movie_id' => request()->movie_id,
-                'user_id' => Auth::user()->id
+//                'user_id' => Auth::user()->id
             ]
         ];
     }
